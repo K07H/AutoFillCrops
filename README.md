@@ -11,6 +11,6 @@ The "/fill" command will use the fertilizer found in player inventory and neares
 # Installation
 1) Edit the "Config.txt" file with the action radius you want (by default the radius is 10800, which represent 36 foundations in length).
 2) Stop server.
-3) Copy folder "AutoFillCrops" to folder "ArkServer\ShooterGame\Binaries\[...]\ArkApi\Plugins".
+3) Copy folder "AutoFillCrops" to folder "ArkServer\ShooterGame\Binaries\\[...]\ArkApi\Plugins".
 4) Start server.
 Done!
