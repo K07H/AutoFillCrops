@@ -1,6 +1,6 @@
 Name: AutoFillCrops plugin
 Author: OSubMarin <legendarytools@gmail.com>
-Version: 1.0
+Version: 1.1
 
 Description:
 This plugin will add the chat command "/fill".

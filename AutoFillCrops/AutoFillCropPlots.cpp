@@ -292,10 +292,11 @@ bool ProcessFillCropsCommand(AShooterPlayerController* PC, float radius)
 									}
 									else
 									{
-										missingFert++;
 #if DEBUG
 										Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: No more fertlizer available for this crop plot.");
 #endif
+										if (currentNumInventoryItems < 10)
+											missingFert = missingFert + (10 - currentNumInventoryItems);
 									}
 								}
 							}
