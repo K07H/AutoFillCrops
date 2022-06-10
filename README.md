@@ -1,5 +1,6 @@
 # AutoFillCrops plugin
 Author: OSubMarin <legendarytools@gmail.com>
+
 Version: 1.0
 
 # Description
