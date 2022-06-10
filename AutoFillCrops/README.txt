@@ -3,7 +3,7 @@ Author: OSubMarin <legendarytools@gmail.com>
 Version: 1.3
 
 Description:
-This plugin allows players to automatically fill nearby crop plots with the fertilizer found in their inventory and nearest dung-beetles.
+This plugin allows players to automatically fill nearby crop plots with the fertilizer found in player inventory and nearest dung-beetles.
 
 
 Installation:
