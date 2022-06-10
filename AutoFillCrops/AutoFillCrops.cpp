@@ -47,7 +47,7 @@ FString LoadConfigFileContent()
 	return fileContent;
 }
 
-float GetFillCropsRadiusConfig()
+std::pair<float, std::string> GetFillCropsRadiusConfig()
 {
 	// Read config file content.
 	FString fileContent = LoadConfigFileContent();
@@ -55,36 +55,44 @@ float GetFillCropsRadiusConfig()
 	{
 		std::string item;
 		std::stringstream ss(fileContent.ToString());
+		float radius = 10800.0F;
+		bool radiusNotFound = true;
 		while (std::getline(ss, item, '\n')) {
 			if (!item.empty() && item.size() > 0)
 			{
 				try
 				{
-					int radiusInt = std::atoi(item.c_str());
-					if (radiusInt > 0 && radiusInt <= 21600)
+					if (radiusNotFound)
 					{
-						//std::string toLog = "INFO: AutoFillCrops radius is set to [" + std::to_string(radiusInt) + "].";
-						return (float)radiusInt;
+						radiusNotFound = false;
+						int radiusInt = std::atoi(item.c_str());
+						if (radiusInt > 0 && radiusInt <= 21600)
+							radius = (float)radiusInt;
+						else
+							radius = 10800.0F;
 					}
+					else
+						return std::pair<float, std::string>(radius, item);
 				}
 				catch (const std::exception&) { }
 			}
 		}
 	}
-	// Defaults to 18000 (36 foundations) if we reach here.
-	Log::GetLog()->info("WARNING: Failed to parse radius from the config file for AutoFillCrops. Using default value of 10800.");
-	return 10800.0F;
+	// Defaults to 10800 (36 foundations) if we reach here.
+	Log::GetLog()->info("WARNING: Failed to parse config file for AutoFillCrops. Using default values (radius 10800 and \"/fill\" command).");
+	return std::pair<float, std::string>(10800.0F, "/fill");
 }
 
-float GetFillCropsRadius()
+std::pair<float, std::string> GetFillCropsConfig()
 {
 	static float _radius = -1.0F;
+	static std::string _commandStr = "/fill";
 
-	if (_radius > 0.0F)
-		return _radius;
-	else
+	if (_radius < 0.0F)
 	{
-		_radius = GetFillCropsRadiusConfig();
-		return _radius;
+		std::pair<float, std::string> conf = GetFillCropsRadiusConfig();
+		_radius = conf.first;
+		_commandStr = conf.second;
 	}
+	return std::pair<float, std::string>(_radius, _commandStr);
 }

@@ -2,4 +2,4 @@
 #include "API/Ark/Ark.h"
 
 UClass* MyBPLoadClass(FString* blueprintPath);
-float GetFillCropsRadius();
+std::pair<float, std::string> GetFillCropsConfig();

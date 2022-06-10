@@ -337,7 +337,8 @@ bool CheckFillCropsCommand(AShooterPlayerController* PC, FString* Message, EChat
 		// Check for /fill command.
 		if (msg.Len() > 1)
 		{
-			if (msg[0] == '/' && msg.Compare("/fill", ESearchCase::IgnoreCase) == 0)
+			auto fillCropsConfig = GetFillCropsConfig();
+			if (msg.Compare(FString(fillCropsConfig.second), ESearchCase::IgnoreCase) == 0)
 			{
 				// Make sure player waits 5 seconds before using /fill command again.
 				auto currTime = time(0);
@@ -347,7 +348,7 @@ bool CheckFillCropsCommand(AShooterPlayerController* PC, FString* Message, EChat
 				if (timeSinceLastChatCommandFive < 0i64 || timeSinceLastChatCommandFive > 5i64)
 				{
 					lastRunCommandTimeFive[steamId] = currTime;
-					return ProcessFillCropsCommand(PC, GetFillCropsRadius()); // Fill crops.
+					return ProcessFillCropsCommand(PC, fillCropsConfig.first); // Fill crops.
 				}
 				else
 				{
