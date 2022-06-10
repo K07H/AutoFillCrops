@@ -196,115 +196,90 @@ bool ProcessFillCropsCommand(AShooterPlayerController* PC, float radius)
 									int currentNumInventoryItems = cropPlotInventory->GetCurrentNumInventoryItems();
 									unsigned int cropPlotId = cropPlot->StructureIDField();
 
-									bool playerFertAvailable = playerFertilizersIndex < playerFertilizersLen;
-									bool dungBeetleFertAvailable = dungBeetleFertilizersIndex < dungBeetleFertilizersLen;
-									if (playerFertAvailable || dungBeetleFertAvailable) // If we have some remaining fertilizer available.
+									if (currentNumInventoryItems < 10)
 									{
-										if (currentNumInventoryItems < 10)
+										//Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Empty slots found. CurrentNumInventoryItems=[" + std::to_string(currentNumInventoryItems) + "]");
+
+										int nbFertSlotsAvailable = 10 - currentNumInventoryItems;
+										//int addedFert = 0;
+										int removedFerts = 0;
+										//while (addedFert < nbFertSlotsAvailable)
+										for (int n = 0; n < nbFertSlotsAvailable; n++)
 										{
-#if DEBUG
-											Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Empty slots found. CurrentNumInventoryItems=[" + std::to_string(currentNumInventoryItems) + "]");
-#endif
-
-											int nbFertSlotsAvailable = 10 - currentNumInventoryItems;
-											//int addedFert = 0;
-											int removedFerts = 0;
-											//while (addedFert < nbFertSlotsAvailable)
-											for (int n = 0; n < nbFertSlotsAvailable; n++)
+											if (playerFertilizersIndex < playerFertilizersLen)
 											{
-												if (playerFertAvailable)
+												playerFertilizersIndex++;
+												// Get player inventory.
+												UPrimalInventoryComponent* playerInv = PC->GetPlayerInventoryComponent();
+												if (playerInv == nullptr)
 												{
-													playerFertilizersIndex++;
-													// Get player inventory.
-													UPrimalInventoryComponent* playerInv = PC->GetPlayerInventoryComponent();
-													if (playerInv == nullptr)
-													{
-														AShooterCharacter* playerCharacter = PC->LastControlledPlayerCharacterField().Get(false);
-														if (playerCharacter != nullptr)
-															playerInv = playerCharacter->MyInventoryComponentField();
-													}
-													// Use fertilizer from player inventory.
-													if (playerInv != nullptr)
-													{
-														UPrimalItem* fertToUse = playerFertilizers[playerFertilizersIndex - 1];
-														if (fertToUse != nullptr)
-														{
-#if DEBUG
-															Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Trying to add 1 fertilizer from player inventory. Index=[" + std::to_string(playerFertilizersIndex - 1) + "] Len=[" + std::to_string(playerFertilizersLen) + "]");
-#endif
-
-															// Remove fertilizer from player inventory.
-															FItemNetID fertToUseId = fertToUse->ItemIDField();
-															playerInv->RemoveItem(&fertToUseId, false, false, true, true);
-															removedFerts++;
-
-#if DEBUG
-															Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Added 1 fertilizer from player inventory.");
-#endif
-														}
-													}
+													AShooterCharacter* playerCharacter = PC->LastControlledPlayerCharacterField().Get(false);
+													if (playerCharacter != nullptr)
+														playerInv = playerCharacter->MyInventoryComponentField();
 												}
-												else if (dungBeetleFertAvailable)
+												// Use fertilizer from player inventory.
+												if (playerInv != nullptr)
 												{
-													dungBeetleFertilizersIndex++;
-													// Get dung beetle inventory.
-													APrimalDinoCharacter* currDungBeetle = dungBeetleFertilizers[dungBeetleFertilizersIndex - 1].second;
-													if (currDungBeetle != nullptr)
+													UPrimalItem* fertToUse = playerFertilizers[playerFertilizersIndex - 1];
+													if (fertToUse != nullptr)
 													{
-														// Get dung beetle inventory.
-														UPrimalInventoryComponent* dungBeetleInv = currDungBeetle->MyInventoryComponentField();
-														// Use fertilizer from dung beetle inventory.
-														if (dungBeetleInv != nullptr)
-														{
-															UPrimalItem* fertToUse = dungBeetleFertilizers[dungBeetleFertilizersIndex - 1].first;
-															if (fertToUse != nullptr)
-															{
-#if DEBUG
-																Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Trying to add 1 fertilizer from dung beetle inventory. Index=[" + std::to_string(dungBeetleFertilizersIndex - 1) + "] Len=[" + std::to_string(dungBeetleFertilizersLen) + "]");
-#endif
+														//Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Trying to add 1 fertilizer from player inventory. Index=[" + std::to_string(playerFertilizersIndex - 1) + "] Len=[" + std::to_string(playerFertilizersLen) + "]");
 
-																// Remove fertilizer from dung beetle inventory.
-																FItemNetID fertToUseId = fertToUse->ItemIDField();
-																dungBeetleInv->RemoveItem(&fertToUseId, false, false, true, true);
-																removedFerts++;
-#if DEBUG
-																Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Added 1 fertilizer from dung beetle inventory.");
-#endif
-															}
-														}
+														// Remove fertilizer from player inventory.
+														FItemNetID fertToUseId = fertToUse->ItemIDField();
+														playerInv->RemoveItem(&fertToUseId, false, false, true, true);
+														removedFerts++;
+
+														//Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Added 1 fertilizer from player inventory.");
 													}
-												}
-												else
-												{
-													missingFert++;
-#if DEBUG
-													Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: No more fertilizer available for this crop plot.");
-#endif
 												}
 											}
-											int totalFertToAdd = (removedFerts > nbFertSlotsAvailable ? nbFertSlotsAvailable : removedFerts);
-											if (totalFertToAdd > 0)
-												AddFertilizerToInventory(cropPlotInventory, totalFertToAdd);
-#if DEBUG
-											Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Total fertilizers added to crop plot is [" + std::to_string(totalFertToAdd) + "].");
-#endif
+											else if (dungBeetleFertilizersIndex < dungBeetleFertilizersLen)
+											{
+												dungBeetleFertilizersIndex++;
+												// Get dung beetle inventory.
+												APrimalDinoCharacter* currDungBeetle = dungBeetleFertilizers[dungBeetleFertilizersIndex - 1].second;
+												if (currDungBeetle != nullptr)
+												{
+													// Get dung beetle inventory.
+													UPrimalInventoryComponent* dungBeetleInv = currDungBeetle->MyInventoryComponentField();
+													// Use fertilizer from dung beetle inventory.
+													if (dungBeetleInv != nullptr)
+													{
+														UPrimalItem* fertToUse = dungBeetleFertilizers[dungBeetleFertilizersIndex - 1].first;
+														if (fertToUse != nullptr)
+														{
+															//Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Trying to add 1 fertilizer from dung beetle inventory. Index=[" + std::to_string(dungBeetleFertilizersIndex - 1) + "] Len=[" + std::to_string(dungBeetleFertilizersLen) + "]");
+
+															// Remove fertilizer from dung beetle inventory.
+															FItemNetID fertToUseId = fertToUse->ItemIDField();
+															dungBeetleInv->RemoveItem(&fertToUseId, false, false, true, true);
+															removedFerts++;
+
+															//Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Added 1 fertilizer from dung beetle inventory.");
+														}
+													}
+												}
+											}
+											else
+											{
+												missingFert++;
+												//Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: No more fertilizer available for this crop plot.");
+											}
 										}
-									}
-									else
-									{
-#if DEBUG
-										Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: No more fertlizer available for this crop plot.");
-#endif
-										if (currentNumInventoryItems < 10)
-											missingFert = missingFert + (10 - currentNumInventoryItems);
+										int totalFertToAdd = (removedFerts > nbFertSlotsAvailable ? nbFertSlotsAvailable : removedFerts);
+										if (totalFertToAdd > 0)
+											AddFertilizerToInventory(cropPlotInventory, totalFertToAdd);
+
+										//Log::GetLog()->debug("Crop plot [" + std::to_string(cropPlotId) + "] at [" + std::to_string(cropPlotPos.X) + "][" + std::to_string(cropPlotPos.Y) + "][" + std::to_string(cropPlotPos.Z) + "]: Total fertilizers added to crop plot is [" + std::to_string(totalFertToAdd) + "].");
 									}
 								}
 							}
 						}
 					}
 				}
-				FString Text = (missingFert > 0 ? L"Crop plots filled (" + FString(std::to_string(missingFert)) + L" fertilizer were missing to completely fill crop plots)." : L"Crop plots filled.");
-				PC->ClientServerChatDirectMessage(&Text, (missingFert > 0 ? FLinearColor(255, 165, 0) : FLinearColor(0, 255, 0)), false);
+				FString Text = (missingFert > 0 ? L"Crop plots filled (" + FString(std::to_string(missingFert)) + L" fertilizer were missing)." : L"Crop plots filled.");
+				PC->ClientServerChatDirectMessage(&Text, FLinearColor(0, 255, 0), false);
 			}
 			else // No crop plots found in radius.
 			{
@@ -337,8 +312,9 @@ bool CheckFillCropsCommand(AShooterPlayerController* PC, FString* Message, EChat
 		// Check for /fill command.
 		if (msg.Len() > 1)
 		{
-			auto fillCropsConfig = GetFillCropsConfig();
-			if (msg.Compare(FString(fillCropsConfig.second), ESearchCase::IgnoreCase) == 0)
+			std::pair<float, std::string> fillCropsConfig = GetFillCropsConfig();
+			FString chatCmd = FString(fillCropsConfig.second);
+			if (msg.Compare(chatCmd, ESearchCase::IgnoreCase) == 0)
 			{
 				// Make sure player waits 5 seconds before using /fill command again.
 				auto currTime = time(0);

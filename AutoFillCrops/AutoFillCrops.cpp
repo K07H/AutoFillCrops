@@ -94,5 +94,6 @@ std::pair<float, std::string> GetFillCropsConfig()
 		_radius = conf.first;
 		_commandStr = conf.second;
 	}
+	Log::GetLog()->info("WARNING: Returning parsed config. Radius=[" + std::to_string(_radius) + "] ChatCmd=[" + _commandStr + "].");
 	return std::pair<float, std::string>(_radius, _commandStr);
 }
