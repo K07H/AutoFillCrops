@@ -9,7 +9,7 @@ This plugin allows players to automatically fill nearby crop plots with the fert
 
 # Installation
 1) Edit the "Config.txt" with:
-   - the action radius you want (by default the radius is 10800, which represent a radius of 36 foundations in length and a diameter of 72 foundations).
+   - the action radius you want (by default the radius is 10800, which represent a radius of 36 foundations and a diameter of 72 foundations).
    - the chat trigger you want (by default the chat trigger is "/fill").
    - the option to search for fertilizers in player inventory or not (by default it is set to "true" so that it searches in player inventory).
    - the option to search for fertilizers in neaby dung beetles inventories or not (by default it is set to "true" so that it searches in nearby dung beetles inventories).
