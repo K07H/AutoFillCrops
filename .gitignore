@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# VisualStudio temporary files
+.vs/*
+AutoFillCrops/.vs/*
+AutoFillCrops/bin-x64/*
+AutoFillCrops/obj-x64/*
+
+# Release files
+AutoFillCrops/*.zip

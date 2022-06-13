@@ -14,14 +14,14 @@
 // 5 seconds delay between command usage.
 #define FILLCROPS_INTERVAL_DELAY 5i64
 
-#define FILLCROPS_CONFIG_RADIUS					"actionRadius="
-#define FILLCROPS_CONFIG_CHAT_TRIGGER			"chatTrigger="
-#define FILLCROPS_CONFIG_SEARCH_IN_PLAYER		"searchInPlayerInventory="
-#define FILLCROPS_CONFIG_SEARCH_IN_DUNGBEETLES	"searchInDungBeetlesInventories="
+#define FILLCROPS_CONFIG_RADIUS                 "actionRadius="
+#define FILLCROPS_CONFIG_CHAT_TRIGGER           "chatTrigger="
+#define FILLCROPS_CONFIG_SEARCH_IN_PLAYER       "searchInPlayerInventory="
+#define FILLCROPS_CONFIG_SEARCH_IN_DUNGBEETLES  "searchInDungBeetlesInventories="
 
-#define FILLCROPS_FERTILIZER_COMPOST_BP			L"Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Consumables/PrimalItemConsumable_Fertilizer_Compost.PrimalItemConsumable_Fertilizer_Compost'"
-#define FILLCROPS_DUNG_BEETLE_BP				L"Blueprint'/Game/PrimalEarth/Dinos/DungBeetle/DungBeetle_Character_BP.DungBeetle_Character_BP'"
-#define FILLCROPS_ABERRANT_DUNG_BEETLE_BP		L"Blueprint'/Game/PrimalEarth/Dinos/DungBeetle/DungBeetle_Character_BP_Aberrant.DungBeetle_Character_BP_Aberrant'"
+#define FILLCROPS_FERTILIZER_COMPOST_BP         L"Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Consumables/PrimalItemConsumable_Fertilizer_Compost.PrimalItemConsumable_Fertilizer_Compost'"
+#define FILLCROPS_DUNG_BEETLE_BP                L"Blueprint'/Game/PrimalEarth/Dinos/DungBeetle/DungBeetle_Character_BP.DungBeetle_Character_BP'"
+#define FILLCROPS_ABERRANT_DUNG_BEETLE_BP       L"Blueprint'/Game/PrimalEarth/Dinos/DungBeetle/DungBeetle_Character_BP_Aberrant.DungBeetle_Character_BP_Aberrant'"
 
 struct AutoFillCropPlotsConfig
 {
