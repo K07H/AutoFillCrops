@@ -1,6 +1,6 @@
 {
   "FullName": "Auto Fill Crop Plots",
   "Description": "Auto fills nearby crop plots using fertilizer from player inventory and nearby dung beetles. legendarytools@gmail.com",
-  "Version": 1.3,
+  "Version": 1.4,
   "MinApiVersion": 3.53
 }

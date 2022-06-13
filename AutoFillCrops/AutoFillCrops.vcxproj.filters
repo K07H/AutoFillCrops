@@ -21,9 +21,6 @@
     <ClCompile Include="AutoFillCropPlots.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AutoFillCrops.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ReadFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -44,7 +41,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutoFillCrops.h">
+    <ClInclude Include="AutoFillCropPlots.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ReadFile.h">
