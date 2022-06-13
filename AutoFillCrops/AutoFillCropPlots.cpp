@@ -426,7 +426,7 @@ bool ProcessFillCropsCommand(AShooterPlayerController* PC, const AutoFillCropPlo
 		}
 	}
 	// Show final message to player.
-	FString Text = L"Crop plots filled" + (missingFert > 0 ? L" (" + FString(std::to_string(missingFert)) + L" fertilizer were missing)." : L".");
+	FString Text = L"Crop plots filled" + (missingFert > 0 ? L" (" + FString(std::to_string(missingFert)) + L" fertilizers were missing)." : L".");
 	PC->ClientServerChatDirectMessage(&Text, FLinearColor(0, 255, 0), false);
 	// Prevent normal chat execution by returning true.
 	return true;
