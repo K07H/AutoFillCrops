@@ -11,7 +11,7 @@ Copy-Item Configs\PluginInfo.json $path
 $compress = @{
   Path = $path, "README.txt"
   CompressionLevel = "Optimal"
-  DestinationPath = "AutoFillCrops-1.4.zip"
+  DestinationPath = "AutoFillCrops-1.5.zip"
 }
 Compress-Archive @compress
 

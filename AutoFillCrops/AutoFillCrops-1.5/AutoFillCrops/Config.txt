@@ -1,0 +1,4 @@
+actionRadius=10800
+chatTrigger=/fill
+searchInPlayerInventory=true
+searchInDungBeetlesInventories=true

@@ -1,6 +1,6 @@
 Name: AutoFillCrops plugin
 Author: OSubMarin <legendarytools@gmail.com>
-Version: 1.4
+Version: 1.5
 
 Description:
 This plugin allows players to automatically fill nearby crop plots with the fertilizer found in player inventory and nearest dung-beetles.
